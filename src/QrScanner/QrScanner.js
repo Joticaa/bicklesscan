@@ -6,6 +6,7 @@ const QrScannerComponent = () => {
   const [data, setData] = useState('No result');
   const [byteData, setByteData] = useState(null); // State to store the byte array
   const [imageSrc, setImageSrc] = useState(null); // State to store uploaded image
+  const [facingMode, setFacingMode] = useState('user'); // 'user' for front camera, 'environment' for back camera
 
   const handleScan = (scanData) => {
     if (scanData) {
@@ -67,6 +68,10 @@ const QrScannerComponent = () => {
     }
   };
 
+  const toggleCamera = () => {
+    setFacingMode(prevMode => (prevMode === 'user' ? 'environment' : 'user'));
+  };
+
   return (
     <div>
       <h1>QR Code Scanner</h1>
@@ -75,6 +80,7 @@ const QrScannerComponent = () => {
         style={previewStyle}
         onError={handleError}
         onScan={handleScan}
+        facingMode={facingMode}
       />
       <p>Scanned Text: {data}</p>
       {byteData && (
@@ -82,6 +88,9 @@ const QrScannerComponent = () => {
       )}
       <input type="file" accept="image/*" onChange={handleImageUpload} />
       {imageSrc && <img src={imageSrc} alt="Uploaded" style={{ maxWidth: '100%', marginTop: '10px' }} />}
+      <button onClick={toggleCamera}>
+        Switch to {facingMode === 'user' ? 'Back' : 'Front'} Camera
+      </button>
     </div>
   );
 };

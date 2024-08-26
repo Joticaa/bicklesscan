@@ -71,7 +71,9 @@ const QrScannerComponent = () => {
         style={previewStyle}
         onError={handleError}
         onScan={handleScan}
-        facingMode="environment"
+        constraints={{
+            video: { facingMode: "environment" }
+       }}
       />
 
       {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
